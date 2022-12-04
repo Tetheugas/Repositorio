@@ -1,16 +1,29 @@
+
+body{
+    background-color: rgb(0, 92, 0);
+}
+p{
+    display: grid;
+}
 nav {
-    border-bottom: 1px solid black;
+    margin-bottom: 20px;
 }
 a:link{
     text-decoration: none;
 }
-.navegar ol {
-    list-style-type: none;
-    padding-left: 0;
+a{
+    color: white;
 }
 
 .navegar {
     display: inline-block;
+    border-radius: 10px;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 1.5em;
+}
+.navegar:hover{
+    background-color: #cacaca;
 }
 
 .navegar a::after {
@@ -20,4 +33,71 @@ a:link{
     font-size: 80%;
     font-weight: bold;
     padding: 0 3px;
+}
+.menu{
+    background-color: rgb(0, 92, 0);
+    color: white;
+    margin: 0px;
+}
+.menu>h1{
+    margin: 0px 0px 0px 40px;
+}
+div{
+    background-color: #cacaca;
+}
+div>p{
+    text-align: center;
+}
+div:hover{
+    background-color: #afafaf;
+}
+div#cafex{
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.336);
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+div#cafex>img{
+    max-width: 233px;
+    max-height: 250px;
+    width: auto;
+    height: auto;
+}
+div#capp{
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.336);
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+div#capp>img{
+    max-width: 233px;
+    max-height: 250px;
+    width: 233px;
+    height: auto;
+}
+div#cafelt{
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.336);
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+img{
+    background-color: #fff;
+    border-radius: 250px;
+}
+footer{
+    display: grid;
+    text-align: center;
+    padding-top: 100px;
+    color: white;
 }

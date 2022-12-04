@@ -8,24 +8,26 @@
     <title>Coffe Shop</title>
 </head>
 <body>
-    <header>
+    <header class="menu">
         <h1>Coffe Shop SA.</h1>
+        <nav>
+            <a href="#"><button class="navegar">Carrinho</button></a>
+            <a href="#"><button class="navegar">Localização</button></a>
+            <a href="#"><button class="navegar">Sobre nós</button></a>
+        </nav>
     </header>
-    <nav>
-        <ol class="navegar">
-            <li class="navegar"><a href="#">Carrinho</a></li>
-            <li class="navegar"><a href="#">Onde estamos localizados</a></li>
-            <li class="navegar"><a href="#">Sobre nós</a></li>
-        </ol>
-    </nav>
-    <div id="cafex">
+    <div id="cafex" onclick="carrinho()">
+        <img src="img/espresso-coffee-glass.jpg" alt="" srcset="">
         <p>Café Expresso</p>
     </div>
-    <div id="capp">
+    <div id="capp" onclick="carrinho()">
+        <img src="https://thumbs.dreamstime.com/b/cappuccino-isolado-no-fundo-branco-51487410.jpg" alt="" srcset="">
         <p>Cappucino</p>
     </div>
-    <div id="cafelt">
+    <div id="cafelt" onclick="carrinho()">
+        <img src="img/cafe.jpg" alt="" srcset="">
         <p>Café latte</p>
     </div>
+    <footer><p>@Tetheugas</p></footer>
 </body>
 </html>
