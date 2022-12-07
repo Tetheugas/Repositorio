@@ -21,7 +21,7 @@ let coffeJson = [
           '400ml',
           '580ml'
         ],
-        description: 'consiste em um terço de café expresso, um terço de leite vaporizado e um terço de espuma de leite vaporizado.'
+        description: 'Consiste em um terço de café expresso, um terço de leite vaporizado e um terço de espuma de leite vaporizado.'
       },
       {
         id: 3,
