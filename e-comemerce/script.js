@@ -2,7 +2,7 @@
 let modalKey = 0
 
 //variavel para controlar quantidade de itens iniciais
-let quantItens = 1
+let quantcoffes = 1
 
 let cart = [] //carrinho
 
@@ -24,15 +24,11 @@ const formatoMonetario = (valor) => {
 const abrirModal = () => {
     seleciona('.coffeWindowArea').style.opacity = 0
     seleciona('.coffeWindowArea').style.display = 'flex'
-    setTimeout(() => {
-        seleciona('.coffeWindowArea').style.opacity = 1
-    }, 150)
+    setTimeout(() => {seleciona('.coffeWindowArea').style.opacity = 1}, 150)
 }
  const fecharModal = () => {
     seleciona('.coffeWindowArea').style.opacity = 0
-    setTimeout(() => {
-        seleciona('.coffeWindowArea').style.display = 'none'
-    }, 500)
+    setTimeout(() => {seleciona('.coffeWindowArea').style.display = 'none'}, 500)
  }
 
  const botoesFechar = () => {
@@ -68,7 +64,7 @@ const abrirModal = () => {
     console.log(coffeJson[key])
 
     //garantir que a quantidade inicial de itens sejam 1
-    quantItens = 1
+    quantcoffes = 1
 
     // para manter a informação de qual item foi clicado
     modalKey = key
@@ -109,14 +105,14 @@ const abrirModal = () => {
  const mudarQuantidade = () => {
     // Ações nos botoes + e - do modal
     seleciona('.coffeInfo--qtmais').addEventListener('click',() => {
-        quantItens++
-        seleciona('.coffeInfo--qt').innerHTML = quantItens
+        quantcoffes++
+        seleciona('.coffeInfo--qt').innerHTML = quantcoffes
     })
 
     seleciona('.coffeInfo--qtmenos').addEventListener('click', () => {
-        if(quantItens > 1){
-            quantItens--
-            seleciona('.coffeInfo--qt').innerHTML = quantItens
+        if(quantcoffes > 1){
+            quantcoffes--
+            seleciona('.coffeInfo--qt').innerHTML = quantcoffes
         }
     })
  }
@@ -132,11 +128,34 @@ const abrirModal = () => {
          let size = seleciona('.coffeInfo--size.selected').getAttribute('data-key')
          console.log('tamanho ' + size)
          //quantidade
-         console.log('Quant. ' + quantItens)
+         console.log('Quant. ' + quantcoffes)
          // price
          let price = seleciona('.coffeInfo--actualPrice').innerHTML.replace('R$&nbsp;', '')
 
+         let identificador = coffeJson[modalKey].id+'t'+size
 
+         let key = cart.findIndex( (item) => item.identificador == identificador )
+        console.log(key)
+
+        if(key > -1) {
+            // se encontrar aumente a quantidade
+            cart[key].qt += quantcoffes
+        } else {
+            // adicionar objeto cafe no carrinho
+            let item = {
+                identificador,
+                id: coffeJson[modalKey].id,
+                size, // size: size
+                qt: quantcoffes,
+                price: parseFloat(price) // price: price
+            }
+            cart.push(item)
+            console.log(item)
+            console.log('Sub total R$ ' + (item.qt * item.price).toFixed(2))
+        }
+        fecharModal()
+        abrirCarrinho()
+        atualizarCarrinho()
     })
  }
 
@@ -149,7 +168,7 @@ const abrirModal = () => {
     }
 
     //exibir aside do carrinho no mobile
-    seleciona('.menu-open').addEventListener('click', () => {
+    seleciona('.menu-openner').addEventListener('click', () => {
         if(cart.length > 0){
             seleciona('aside').classList.add('show')
             seleciona('aside').style.left = '0'
@@ -159,7 +178,7 @@ const abrirModal = () => {
 
  const fecharCarrinho = () => {
     //fechar carrinho com botao x no mobile
-    seleciona('.menu-close').addEventListener('click', () => {
+    seleciona('.menu-closer').addEventListener('click', () => {
         seleciona('aside').style.left = '100vw' //ele fica fora da tela
         seleciona('header').style.display = 'flex'
     })
@@ -167,7 +186,7 @@ const abrirModal = () => {
 
  const atualizarCarrinho = () =>{
     // exibir numero de itens no carrinho
-    seleciona('.menu-open span').innerHTML = cart.length
+    seleciona('.menu-openner span').innerHTML = cart.length
 
     //mostrar ou nao o carrinho
     if(cart.length > 0){
@@ -187,15 +206,15 @@ const abrirModal = () => {
 
         for(let i in cart){
             //use o find para pegar o item por id
-            let coffeItem = coffeJson.find((item) => item.id == cart[i].id)
+            let coffeItem = coffeJson.find( (item) => item.id == cart[i].id)
             console.log(coffeItem)
 
             //em cada item pegar o subtotal
-            subtotal +- cart[i].price * cart[i].qt
+            subtotal += cart[i].price * cart[i].qt
             //console.log(cart[i].price)
 
             //fazer o clone, exibit na tela e depois preencher informações
-            let cartItem = seleciona('.modelos . cart--item').cloneNode(true)
+            let cartItem = seleciona('.models .cart--item').cloneNode(true)
             seleciona('.cart').append(cartItem)
             
             let itemSizeName = cart[i].size
@@ -204,8 +223,9 @@ const abrirModal = () => {
 
             //preencher as informações
             cartItem.querySelector('img').src = coffeItem.img
-            cartItem.querySelector('.cart--item-nome').innerHTML = itemName
+            cartItem.querySelector('.cart--item-name').innerHTML = itemName
             cartItem.querySelector('.cart--item--qt').innerHTML = cart[i].qt
+            
 
             //selecionar botoes + e -
             cartItem.querySelector('.cart--item-qtmais').addEventListener('click', () => {
@@ -264,7 +284,7 @@ const abrirModal = () => {
 
 coffeJson.map((item, index ) => {
     //console.log(item)
-    let coffeItem = document.querySelector('.modelos .coffe-item').cloneNode(true)
+    let coffeItem = document.querySelector('.models .coffe-item').cloneNode(true)
 
     //console.log(coffeItem)
 
@@ -291,11 +311,10 @@ coffeJson.map((item, index ) => {
         preencherTamanhos(chave)
 
         //definir quantidade inicial como 1
-        seleciona('.coffeInfo--qt').innerHTML = quantItens
+        seleciona('.coffeInfo--qt').innerHTML = quantcoffes
 
         escolherTamanhoPreco(chave)
 
-        adicionarNoCarrinho()
         
 
     })

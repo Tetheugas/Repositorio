@@ -3,6 +3,10 @@
 * {
     box-sizing: border-box;
 }
+cappuccino.jpg{
+    width: 200px;
+    height: 200px;
+}
 
 body {
     background-color:#EEE;
@@ -13,7 +17,7 @@ body {
     min-height:100vh;
 }
 
-.modelos {
+.models {
     display:none;
 }
 
@@ -34,7 +38,7 @@ header h1 {
     color: #fff;
 }
 
-.menu-open {
+.menu-openner{
     margin-right: 15px;
     font-size: 26px;
     background-color: #c9a87b;
@@ -43,11 +47,11 @@ header h1 {
     cursor: pointer;
 }
 
-.menu-open span {
+.menu-openner span {
     margin-right:10px;
 }
 
-.menu-close {
+.menu-closer {
     width:32px;
     height:32px;
     display:none;
@@ -336,7 +340,7 @@ h1, h2 {
     margin-right:20px;
 }
 
-.cart--item-nome {
+.cart--item-name {
     flex:1;
 }
 
@@ -440,7 +444,7 @@ h1, h2 {
         width:100vw;
     }
 
-    .menu-close {
+    .menu-closer {
         display:block;
     }
 
@@ -502,7 +506,7 @@ h1, h2 {
     header h1 {
         font-size: 1.5rem;
     }
-    .menu-open {
+    .menu-openner{
         font-size: 1.5rem;
     }
 }
@@ -511,7 +515,7 @@ h1, h2 {
     header h1 {
         font-size: 1rem;
     }
-    .menu-open {
+    .menu-openner{
         font-size: 1.5rem;
     }
 }
