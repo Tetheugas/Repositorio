@@ -121,6 +121,146 @@ const abrirModal = () => {
     })
  }
 
+ const adicionarNoCarrinho = () => {
+    seleciona('.coffeInfo--addButton').addEventListener('click', () => {
+        console.log('Adicionar ao carrinho')
+
+         // pegar dados da janela modal atual
+         // qual item? pegue o modalKey para usar coffeJson[modalKey]
+         console.log('Item ' + modalKey)
+         // tamanho
+         let size = seleciona('.coffeInfo--size.selected').getAttribute('data-key')
+         console.log('tamanho ' + size)
+         //quantidade
+         console.log('Quant. ' + quantItens)
+         // price
+         let price = seleciona('.coffeInfo--actualPrice').innerHTML.replace('R$&nbsp;', '')
+
+
+    })
+ }
+
+ const abrirCarrinho = () => {
+    console.log('Qtd de itens no carrinho ' + cart.length)
+    if(cart.length > 0){
+        //mostra o carrinho
+        seleciona('aside').classList.add('show')
+        seleciona('header').style.display = 'flex' // mostrar barra superior
+    }
+
+    //exibir aside do carrinho no mobile
+    seleciona('.menu-open').addEventListener('click', () => {
+        if(cart.length > 0){
+            seleciona('aside').classList.add('show')
+            seleciona('aside').style.left = '0'
+        }
+    })
+ }
+
+ const fecharCarrinho = () => {
+    //fechar carrinho com botao x no mobile
+    seleciona('.menu-close').addEventListener('click', () => {
+        seleciona('aside').style.left = '100vw' //ele fica fora da tela
+        seleciona('header').style.display = 'flex'
+    })
+ }
+
+ const atualizarCarrinho = () =>{
+    // exibir numero de itens no carrinho
+    seleciona('.menu-open span').innerHTML = cart.length
+
+    //mostrar ou nao o carrinho
+    if(cart.length > 0){
+
+        //mostrar  carrinho
+        seleciona('aside').classList.add('show')
+
+        //zerar meu .cart para nao fazer insercoes duplicadas
+        seleciona('.cart').innerHTML = ''
+
+        //crie as variaveis antes do for
+        let subtotal = 0
+        let desconto = 0
+        let total = 0
+
+        //para preencher os itens do carrinho, calcular subtotal
+
+        for(let i in cart){
+            //use o find para pegar o item por id
+            let coffeItem = coffeJson.find((item) => item.id == cart[i].id)
+            console.log(coffeItem)
+
+            //em cada item pegar o subtotal
+            subtotal +- cart[i].price * cart[i].qt
+            //console.log(cart[i].price)
+
+            //fazer o clone, exibit na tela e depois preencher informações
+            let cartItem = seleciona('.modelos . cart--item').cloneNode(true)
+            seleciona('.cart').append(cartItem)
+            
+            let itemSizeName = cart[i].size
+
+            let itemName = `${coffeItem.name} (${itemSizeName})`
+
+            //preencher as informações
+            cartItem.querySelector('img').src = coffeItem.img
+            cartItem.querySelector('.cart--item-nome').innerHTML = itemName
+            cartItem.querySelector('.cart--item--qt').innerHTML = cart[i].qt
+
+            //selecionar botoes + e -
+            cartItem.querySelector('.cart--item-qtmais').addEventListener('click', () => {
+                console.log('clicou no botão mais')
+                //adicionar apenas a quantidade que esta nesse contexto
+                cart[i].qt++
+                //atualizar qt
+                atualizarCarrinho()
+            })
+
+            cartItem.querySelector('.cart--item-qtmenos').addEventListener('click', () =>{
+                console.log('clicou no botao menos')
+                if(cart[i].qt > 1){
+                    //subtrair apenas a quantidade que esta nesse contexto
+                    cart[i].qt--
+                }else {
+                    //remover se for zero
+                    cart.splice(i, 1)
+                }
+
+                (cart.length < 1) ? seleciona('header').style.display = 'flex' : ''
+                
+                 //atualizar qt
+                 atualizarCarrinho()
+            })
+            
+            seleciona('.cart').append(cartItem)
+
+        }//fim do for
+        
+        //desconto
+        desconto = subtotal * 0
+        total = subtotal - desconto
+
+        //exibir na tela os resultados
+        // selecionar o ultimo span do elemento
+        seleciona('.subtotal span:last-child').innerHTML = formatoReal(subtotal)
+        seleciona('.desconto span:last-child').innerHTML = formatoReal(desconto)
+        seleciona('.total span:last-child').innerHTML = formatoReal(total)
+
+    } else{
+        //ocultar carrinho
+        seleciona('aside').classList.remove('show')
+        seleciona('aside').style.left = '100vw'
+    }
+ }
+
+ const finalizarCompra = () => {
+    seleciona('.cart--finalizar').addEventListener('click', () => {
+        console.log('finalizar compra')
+        seleciona('aside').classList.remove('show')
+        seleciona('aside').style.left = '100vw'
+        seleciona('header').style.display = 'flex'
+    })
+ }
 
 coffeJson.map((item, index ) => {
     //console.log(item)
@@ -150,11 +290,12 @@ coffeJson.map((item, index ) => {
         //tamanho selecionado
         preencherTamanhos(chave)
 
-        //deficinir quantidade inicial como 1
+        //definir quantidade inicial como 1
         seleciona('.coffeInfo--qt').innerHTML = quantItens
 
         escolherTamanhoPreco(chave)
 
+        adicionarNoCarrinho()
         
 
     })
@@ -172,3 +313,8 @@ coffeJson.map((item, index ) => {
 
 //mudar quantidade com os botoes + e -
 mudarQuantidade()
+
+adicionarNoCarrinho()
+atualizarCarrinho()
+fecharCarrinho()
+finalizarCompra()
